@@ -1,4 +1,4 @@
-import csv, requests, datetime
+import csv, datetime
 from time import sleep, time
 
 from bs4 import BeautifulSoup

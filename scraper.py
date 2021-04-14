@@ -1,4 +1,4 @@
-import csv, requests, datetime
+import csv, datetime
 from time import sleep, time
 
 from bs4 import BeautifulSoup
@@ -16,27 +16,14 @@ driver = webdriver.Chrome(options=options)
 
 # variables & initialisation
 
-startTime = time()
-currentPageNum = 1
-baseDir = Path(__file__).resolve(strict=True).parent
+startTime = time() # starting time of the scraping
+currentPageNum = 1 # current page number
+baseDir = Path(__file__).resolve(strict=True).parent # path to the base directory where the output will be saved
 
 # naming the output file
 
-outputTimestamp = datetime.datetime.now().strftime("%Y%m%d%H%M") # year/month/date/hour/minute
+outputTimestamp = datetime.datetime.now().strftime("%Y%m%d%H%M") # year/month/date/hour/minute 
 outputFilename = f"output_{outputTimestamp}.csv"
-
-# main process
-
-def runProcess(pageNumber, filename, driver):
-
-    if connectWebsite(driver, pageNumber):
-        sleep(2)
-        html = driver.page_source
-        outputList = parse_html(html)
-
-        writeFile(outputList, filename)
-    else:
-        print("Error connecting to gadgets now!")
 
 # connecting to the website
 
@@ -98,6 +85,19 @@ def writeFile(outputList, filename):
             fieldnames = ["heading", "url"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writerow(row)
+
+# main process
+
+def runProcess(pageNumber, filename, driver):
+
+    if connectWebsite(driver, pageNumber):
+        sleep(2)
+        html = driver.page_source
+        outputList = parse_html(html)
+
+        writeFile(outputList, filename)
+    else:
+        print("Error connecting to gadgets now!")
 
 # scraping
 
