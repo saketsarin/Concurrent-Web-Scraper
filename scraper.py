@@ -58,7 +58,6 @@ def parse_html(html):
     article = 0
     for span in spanBlocks:
         articleText = span.find("a")["title"]
-        # articleText = articleText.strip('"')
         articleUrl = span.find("a")["href"]
         words = ['apple', 'Apple', 'APPLE']
 
